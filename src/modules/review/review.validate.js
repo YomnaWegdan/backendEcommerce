@@ -10,14 +10,16 @@ const createReviewValidation = {
     params:Joi.object({
         productId:generalFiled.id.required()
     }),
-    headers: generalFiled.headers.required(),
-};
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)};
 const deleteReviewValidation = {
     params:Joi.object({
         productId: generalFiled.id.required(),
         reviewId: generalFiled.id.required(),
     }),
-    headers: generalFiled.headers.required(),
-}
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)}
 
 export{createReviewValidation , deleteReviewValidation }

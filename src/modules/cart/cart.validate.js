@@ -8,7 +8,10 @@ const createCartValidation = {
            quantity:Joi.number().integer().min(1).required()
         }).required()
     ,
-    headers: generalFiled.headers.required()
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)
+
 }
 
 const removeCartValidation = {
@@ -16,11 +19,15 @@ const removeCartValidation = {
            productId:generalFiled.id.required(),
         }).required()
     ,
-    headers: generalFiled.headers.required()
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)
 }
 const clearCartValidation = {
    
-    headers: generalFiled.headers.required()
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)
 }
 export{
     createCartValidation  , removeCartValidation , clearCartValidation}

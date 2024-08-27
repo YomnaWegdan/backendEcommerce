@@ -22,8 +22,9 @@ const createProductValidation = {
         }).required(),
 
     // file: generalFiled.file.required(),
-    headers: generalFiled.headers.required()
-}
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)}
 
 const updateProductValidation = {
     body:  Joi.object({
@@ -45,7 +46,8 @@ const updateProductValidation = {
             coverImages:Joi.array().items( generalFiled.file.required()).required()
 
     }),
-    headers: generalFiled.headers.required()
-}
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)}
 export{
     createProductValidation , updateProductValidation}

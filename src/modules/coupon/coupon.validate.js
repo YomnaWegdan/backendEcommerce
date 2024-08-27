@@ -9,7 +9,9 @@ const createCouponValidation = {
         fromDate: Joi.date().greater(Date.now()).required(),
         toDate: Joi.date().greater(Joi.ref('fromDate')).required(),
     }).required(),
-    headers: generalFiled.headers.required(),
+    headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)
 };
 
 

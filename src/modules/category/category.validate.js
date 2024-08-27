@@ -20,7 +20,8 @@ const updateCategoryValidation = {
         }).required()
     ,
     file: generalFiled.file,
-    headers: generalFiled.headers.required()
-}
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)}
 export{
     createCategoryValidation , updateCategoryValidation}

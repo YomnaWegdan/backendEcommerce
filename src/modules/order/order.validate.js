@@ -12,7 +12,9 @@ const createOrderValidation = {
         couponCode:Joi.string().optional(),
         }).required()
     ,
-    headers: generalFiled.headers.required()
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)
 }
 
 const cancelOrderValidation = {
@@ -23,7 +25,9 @@ const cancelOrderValidation = {
     params:Joi.object({
         id:generalFiled.id.required()
     }),
-    headers: generalFiled.headers.required()
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)
 }
 export{
     createOrderValidation , cancelOrderValidation}

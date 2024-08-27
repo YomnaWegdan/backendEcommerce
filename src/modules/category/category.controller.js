@@ -41,27 +41,23 @@ const createCategory = catchError( async (req , res , next) =>{
 
 
 const getCategory = catchError(async (req, res, next) => {
-  // Initialize ApiFeatures with the query and apply features
-  const ApiFeatures = new ApiFeatures(
-    categoryModel.find({}).populate([{ path: 'subCategories' }]),
-    req.query
-  )
+    const apiFeatures = new ApiFeatures(
+        categoryModel.find({}).populate([{ path: 'subCategories' }]),
+        req.query
+    )
     .pagination()
     .filter()
     .sort()
     .select()
     .search();
 
-  // Execute the query
-  const categories = await ApiFeatures.mongooseQuery;
+    const categories = await apiFeatures.mongooseQuery;
 
-  // Check if no categories were found
-  if (categories.length === 0) {
-    return next(new appError('Categories not found', 404));
-  }
+    if (categories.length === 0) {
+        return next(new appError('Categories not found', 404));
+    }
 
-  // Send a successful response with the categories
-  res.status(200).json({ message: 'success', categories });
+    res.status(200).json({ message: 'success', categories });
 });
 
 

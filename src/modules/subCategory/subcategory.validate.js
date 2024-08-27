@@ -11,8 +11,9 @@ const createSubCategoryValidation = {
         categoryId:generalFiled.id.required()
     }),
     // file: generalFiled.file.required(),
-    headers: generalFiled.headers.required()
-}
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)}
 
 const updateSubCategoryValidation = {
     body:  Joi.object({
@@ -20,7 +21,8 @@ const updateSubCategoryValidation = {
         }).required()
     ,
     file: generalFiled.file,
-    headers: generalFiled.headers.required()
-}
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)}
 export{
     createSubCategoryValidation , updateSubCategoryValidation}

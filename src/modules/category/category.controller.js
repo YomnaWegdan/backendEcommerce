@@ -1,5 +1,6 @@
 import { categoryModel } from "../../models/category.model.js"
 import { appError } from "../../utilities/appError.js"
+import {ApiFeatures} from "../../utilities/apiFeatures.js"
 import { catchError } from "../../middlewares/asyncHandlerError.js"
 import  cloudinary  from "../../utilities/cloudinary.js"
 import { nanoid } from "nanoid"
@@ -38,23 +39,31 @@ const createCategory = catchError( async (req , res , next) =>{
     res.status(201).json({message :'success' , category })
 })
 
-const getCategory = catchError( async (req , res , next) =>{
-    // const categories = await categoryModel.find({}).populate([{path:'subCategories'}])
 
-    
-        const ApiFeatures = new ApiFeatures(categoryModel.find({}).populate([{path:'subCategories'}]) , req.query)
-        .pagination()
-        .filter()
-        .sort()
-        .select()
-        .search()
+const getCategory = catchError(async (req, res, next) => {
+  // Initialize ApiFeatures with the query and apply features
+  const ApiFeatures = new ApiFeatures(
+    categoryModel.find({}).populate([{ path: 'subCategories' }]),
+    req.query
+  )
+    .pagination()
+    .filter()
+    .sort()
+    .select()
+    .search();
 
-    const categories = await ApiFeatures.mongooseQuery
+  // Execute the query
+  const categories = await ApiFeatures.mongooseQuery;
 
-    if(!categories) return next(new appError('category not found' , 404))
+  // Check if no categories were found
+  if (categories.length === 0) {
+    return next(new appError('Categories not found', 404));
+  }
 
-    res.status(201).json({message :'success' , categories  })
-})
+  // Send a successful response with the categories
+  res.status(200).json({ message: 'success', categories });
+});
+
 
 const updateCategory = catchError( async (req , res , next) =>{
 

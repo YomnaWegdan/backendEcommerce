@@ -8,8 +8,9 @@ const createBrandValidation = {
         }).required()
     ,
     file: generalFiled.file.required(),
-    headers: generalFiled.headers.required()
-}
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)}
 
 const updateBrandValidation = {
     body:  Joi.object({
@@ -17,7 +18,8 @@ const updateBrandValidation = {
         }).required()
     ,
     file: generalFiled.file,
-    headers: generalFiled.headers.required()
-}
+ headers: Joi.object({
+    token: Joi.string().required()  
+  }).unknown(true)}
 export{
     createBrandValidation ,    updateBrandValidation}

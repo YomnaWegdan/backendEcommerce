@@ -1,5 +1,6 @@
 import { appError } from "../../utilities/appError.js"
 import { catchError } from "../../middlewares/asyncHandlerError.js"
+import { ApiFeatures } from "../../utilities/apiFeatures.js"
 import  cloudinary  from "../../utilities/cloudinary.js"
 import { nanoid } from "nanoid"
 import slugify from "slugify"
@@ -46,17 +47,14 @@ const createProduct = catchError( async (req , res , next) =>{
 
 const getAllProducts = catchError( async (req , res , next) =>{
 
-
-   
-
-    const ApiFeatures = new ApiFeatures(productModel.find({}) , req.query)
+    const apiFeatures = new ApiFeatures(productModel.find({}) , req.query)
         .pagination()
         .filter()
         .sort()
         .select()
         .search()
 
-    const products = await ApiFeatures.mongooseQuery
+    const products = await apiFeatures.mongooseQuery
 
     if(!products) return next(new appError('product is not found' , 404))
 

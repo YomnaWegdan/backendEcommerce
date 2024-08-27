@@ -2,11 +2,14 @@ import { dbConnection } from '../database/dbConnection.js'
 import cors from 'cors'
 import { globalError } from "./middlewares/asyncHandlerError.js"
 import * as routers from './modules/index.routes.js'
+import { webHook } from './modules/order/order.controller.js'
 import { appError } from './utilities/appError.js'
 import { deleteFromCloudinary } from './utilities/deleteFromCloudinary.js'
 import { deleteFromDatabase } from './utilities/deleteFromDatabase.js'
 export const initApp = (app , express)=>{
     app.use(cors())
+    routers.orderRouter.post('/webhook', express.raw({type: 'application/json'}), webHook);
+
 app.use(express.json())
 
 app.get('/', (req, res) => res.status(200).json({message: 'success'}));
